@@ -110,18 +110,6 @@ update_rule(){
     else
         echo "未检测到aria2，跳过更新aria2 BT Tracker" 
     fi
-    if [ "$( opkg list-installed 2>/dev/null| grep -c "^luci-app-adguardhome")" -ne '0' ] && [ "$( opkg list-installed 2>/dev/null| grep -c "^smartdns")" -ne '0' ];then
-        echo "开始更新adguardhome上游 DNS 服务器分流规则（/etc/AdGuardHome-dnslist(by cmzj).yaml)" 
-        mkdir -p $TMPDIR/update/rule/adguardhome
-        cd $TMPDIR/update/rule/adguardhome
-        [[ -d $TMPDIR ]] && rm -rf $TMPDIR/update/rule/adguardhome/* || exit 1
-        curl -s -L --retry 6 --connect-timeout 20 "https://raw.githubusercontent.com/chenmozhijin/AdGuardHome-Rules/main/AdGuardHome-dnslist(by%20cmzj).yaml" -o "AdGuardHomednslist" || download_failed
-        cat ./AdGuardHomednslist > /etc/AdGuardHome-dnslist"(by cmzj)".yaml
-        /etc/init.d/AdGuardHome restart
-        echo "更新adguardhome上游 DNS 服务器分流规则（/etc/AdGuardHome-dnslist(by cmzj).yaml)完成"
-    else
-        echo "未检测到luci-app-adguardhome与smartdns或其中之一，跳过更新adguardhome上游 DNS 服务器分流规则" 
-    fi
     if [ "$( opkg list-installed 2>/dev/null| grep -c "^luci-app-openclash")" -ne '0' ] ;then
         echo "开始更新openclash直连规则(by 沉默の金)与代理规则(by 沉默の金)"
         mkdir -p $TMPDIR/update/rule/openclash
