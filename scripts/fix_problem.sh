@@ -10,7 +10,7 @@ if [[ "$openwrt_tag_branch" == "v23.05.0-rc4" ]] ; then
     echo "修复https://github.com/openwrt/packages/pull/22251"
     curl -s -L --retry 6 https://github.com/openwrt/packages/commit/361b360d2bbf7abe93241f6eaa12320d8d83475a.patch  | patch -p1 -d feeds/packages 2>/dev/null
   fi
- fi
+fi
 if [[ "$openwrt_tag_branch" == "v23.05.2" ]] ; then
   if grep -q "^GO_VERSION_MAJOR_MINOR:=1.21$" "feeds/packages/lang/golang/golang/Makefile" && grep -q "^GO_VERSION_PATCH:=3$" "feeds/packages/lang/golang/golang/Makefile"; then
     echo "更新golang"
